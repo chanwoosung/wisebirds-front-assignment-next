@@ -1,6 +1,6 @@
+import Navigation from "@/components/Navigation";
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
-import Link from "next/link";
 import "./globals.css";
 
 const inter = Inter({ subsets: ["latin"] });
@@ -18,11 +18,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={inter.className}>
-        <div className="flex w-screen bg-bgSkyBlue h-14">
-          <Link href={"/"} className="flex justify-center flex-col p-4">
-            wisebirds
-          </Link>
-        </div>
+        <Navigation />
         {children}
       </body>
     </html>
