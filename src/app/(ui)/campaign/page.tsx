@@ -1,8 +1,11 @@
 "use client";
 
 import Pagination from "@/components/Pagenation";
+import TableBody from "@/components/Table/Body";
+import { TableHeader } from "@/components/Table/Header";
 import { getCampaign } from "@/lib/services/campaign";
 import { CampaignKeyType } from "@/types";
+import { ICampaignResponse } from "@/types/services";
 import { useQuery } from "@tanstack/react-query";
 import { useSearchParams } from "next/navigation";
 
@@ -10,7 +13,7 @@ export default function Campaign() {
   const searchParams = useSearchParams();
   const currnetPage = searchParams.get("page") ?? 1;
   const dataSize = searchParams.get("size") ?? 25;
-  const { data } = useQuery<ICampaignResponse>({
+  const { data } = useQuery<ICampaignResponse<String>>({
     queryKey: ["campaign", currnetPage, dataSize],
     queryFn: () =>
       getCampaign({
@@ -18,41 +21,13 @@ export default function Campaign() {
         size: Number(dataSize),
       }),
   });
+  if (data === undefined) return null;
   return (
     <div className="flex flex-col gap-2">
       <table className="w-full border-collapse">
-        <thead>
-          <tr>
-            {Object.values(CampaignKeyType).map((key) => (
-              <th key={key} className="border border-gray-400 p-2">
-                {key}
-              </th>
-            ))}
-          </tr>
-        </thead>
-        <tbody>
-          {data?.content.map((campaign, index) => (
-            <tr key={index}>
-              <td className="border border-gray-400 p-2">{campaign.id}</td>
-              <td className="border border-gray-400 p-2">{campaign.name}</td>
-              <td className="border border-gray-400 p-2">
-                {campaign.enabled ? "Yes" : "No"}
-              </td>
-              <td className="border border-gray-400 p-2">
-                {campaign.campaign_objective}
-              </td>
-              <td className="border border-gray-400 p-2">
-                {campaign.impressions}
-              </td>
-              <td className="border border-gray-400 p-2">{campaign.clicks}</td>
-              <td className="border border-gray-400 p-2">{campaign.ctr}</td>
-              <td className="border border-gray-400 p-2">
-                {campaign.video_views}
-              </td>
-              <td className="border border-gray-400 p-2">{campaign.vtr}</td>
-            </tr>
-          ))}
-        </tbody>
+        <TableHeader enumObject={CampaignKeyType} />
+
+        <TableBody data={data.content} />
       </table>
       <div>
         <Pagination
