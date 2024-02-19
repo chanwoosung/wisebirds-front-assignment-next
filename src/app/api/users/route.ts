@@ -1,5 +1,4 @@
 import { paging } from "@/lib/paging";
-import { campaignData } from "@/mocks";
 import { userData } from "@/mocks/user";
 import { NextRequest, NextResponse } from "next/server";
 
@@ -13,8 +12,8 @@ async function GET(req: NextRequest) {
     const paginatedData = {
       content: slicedData,
       size: size,
-      total_elements: campaignData.total_elements,
-      total_pages: Math.ceil(campaignData.total_elements / size),
+      total_elements: userData.total_elements,
+      total_pages: Math.ceil(userData.total_elements / size),
     };
 
     return NextResponse.json(paginatedData);
@@ -23,28 +22,28 @@ async function GET(req: NextRequest) {
   }
 }
 
-async function PATCH(req: NextRequest) {
+async function POST(req: NextRequest) {
   try {
-    const id = req.nextUrl.searchParams.get("id");
-    console.log(id);
-    if (id === undefined)
-      return NextResponse.json({ message: "id is null" }, { status: 400 });
-    if (id && campaignData.content[Number(id)] === undefined) {
-      return NextResponse.json({ message: "id is null" }, { status: 404 });
-    }
+    console.log(req.body);
+    // if (id === undefined)
+    //   return NextResponse.json({ message: "id is null" }, { status: 400 });
+    // if (id && campaignData.content[Number(id)] === undefined) {
+    //   return NextResponse.json({ message: "id is null" }, { status: 404 });
+    // }
 
-    return NextResponse.json(
-      {
-        id,
-        result: true,
-      },
-      {
-        status: 200,
-      }
-    );
+    // return NextResponse.json(
+    //   {
+    //     id,
+    //     result: true,
+    //   },
+    //   {
+    //     status: 200,
+    //   }
+    // );
+    return NextResponse.json({});
   } catch (error) {
     return NextResponse.json({ error }, { status: 500 });
   }
 }
 
-export { GET, PATCH };
+export { GET, POST };

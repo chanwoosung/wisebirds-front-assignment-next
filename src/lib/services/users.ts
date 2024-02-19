@@ -1,3 +1,5 @@
+import { IRequestUserUpload } from "@/app/(ui)/user/@modal/upload/page";
+
 export const getUsers = async ({
   page,
   size,
@@ -16,8 +18,9 @@ export const getUsers = async ({
   return res.json();
 };
 
-export const patchCampaign = async (id: number) => {
-  return await fetch(`http://localhost:3000/api/campaign?id=${id}`, {
-    method: "PATCH",
+export const postUsers = async (params: IRequestUserUpload) => {
+  return await fetch(`http://localhost:3000/api/users`, {
+    method: "POST",
+    body: JSON.stringify(params),
   });
 };

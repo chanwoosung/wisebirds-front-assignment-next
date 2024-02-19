@@ -43,26 +43,21 @@ export default function Modal({
                         bg-white
                         p-4
                         rounded-lg"
-        onClick={(e) => {
-          e.stopPropagation();
-          console.log("content 눌림");
-        }}
       >
         {children}
       </div>
       <div
         className="fixed
-                        top-0
-                        left-0
-                        right-0
-                        bottom-0
-                        bg-black/[0.4]
-                        z-[999]"
+                    top-0
+                    left-0
+                    right-0
+                    bottom-0
+                    bg-black/[0.4]
+                    z-[999]"
         onClick={(e) => {
           e.preventDefault();
           e.stopPropagation();
           handleClose();
-          console.log("overlay 눌림");
         }}
       />
     </>,

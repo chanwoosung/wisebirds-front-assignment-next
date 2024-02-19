@@ -1,17 +1,11 @@
-export default function UserLayout({
-  children,
-  modal,
-}: Readonly<{
-  children: React.ReactNode;
-  modal: React.ReactNode;
-}>) {
+export default function UserLayout(props: any) {
   return (
     <>
       <div className="flex flex-col w-full">
         <div className="flex p-4 ">유저 관리</div>
-        {children}
+        {props.children}
       </div>
-      {modal}
+      {props.modal}
     </>
   );
 }

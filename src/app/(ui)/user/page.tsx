@@ -6,9 +6,11 @@ import { TableHeader } from "@/components/Table/Header";
 import { getUsers } from "@/lib/services/users";
 import { IUser, IUsersResponse, UserTableHeader } from "@/types/services";
 import { useQuery } from "@tanstack/react-query";
-import { useSearchParams } from "next/navigation";
+import Link from "next/link";
+import { usePathname, useSearchParams } from "next/navigation";
 
 export default function User() {
+  const pathname = usePathname();
   const searchParams = useSearchParams();
   const currnetPage = searchParams.get("page") ?? 1;
   const dataSize = searchParams.get("size") ?? 25;
@@ -25,7 +27,9 @@ export default function User() {
   const callRenderer = (obj: IUser, key: string) => {
     if (key === "edit") {
       return (
-        <button className="w-fit border-2 p-4 border-gray-100">수정</button>
+        <div className="w-full flex justify-center">
+          <button className="w-fit border-2 p-4 border-gray-100">수정</button>
+        </div>
       );
     }
     return <span>{obj[key as keyof IUser].toString()}</span>;
@@ -36,7 +40,12 @@ export default function User() {
   return (
     <>
       <div className="flex flex-col gap-2">
-        <button className="w-fit border-2 p-4 border-gray-100">등록</button>
+        <Link
+          href={`${pathname}/upload`}
+          className="w-fit border-2 p-4 border-gray-100"
+        >
+          등록
+        </Link>
         <div className="flex flex-col gap-2">
           <table className="w-full border-collapse">
             <TableHeader enumObject={UserTableHeader} />
