@@ -15,3 +15,9 @@ export const getCampaign = async ({
 
   return res.json();
 };
+
+export const patchCampaign = async (id: number) => {
+  return await fetch(`http://localhost:3000/api/campaign?id=${id}`, {
+    method: "PATCH",
+  });
+};

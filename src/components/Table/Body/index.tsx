@@ -1,15 +1,15 @@
-import Switch from "@/components/Switch";
-import AuthStore from "@/stores/authStore";
 import { observer } from "mobx-react-lite";
+import { ReactNode } from "react";
 
 type ObjectType = { [key: string]: any };
 
 interface ITableBodyProps<T extends ObjectType> {
   data: T[];
+  cellRenderer?: (obj: T, key: string) => ReactNode;
 }
 
 const TableBody = observer(
-  <T extends ObjectType>({ data }: ITableBodyProps<T>) => {
+  <T extends ObjectType>({ data, cellRenderer }: ITableBodyProps<T>) => {
     const keys = Object.keys(data[0]);
 
     return (
@@ -18,14 +18,7 @@ const TableBody = observer(
           <tr key={index}>
             {keys.map((key) => (
               <td key={key} className="border border-gray-400 p-2">
-                {typeof obj[key] === "boolean" ? (
-                  <Switch
-                    defaultValue={obj[key]}
-                    isDisabled={AuthStore.auth === "Viewer"}
-                  />
-                ) : (
-                  obj[key]
-                )}
+                {cellRenderer ? cellRenderer(obj, key) : obj[key]}
               </td>
             ))}
           </tr>
