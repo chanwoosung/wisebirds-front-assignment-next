@@ -7,7 +7,11 @@ import { TableHeader } from "@/components/Table/Header";
 import { getCampaign, patchCampaign } from "@/lib/services/campaign";
 import AuthStore from "@/stores/authStore";
 import { CampaignKeyType } from "@/types";
-import { ICampaign, ICampaignResponse } from "@/types/services";
+import {
+  ICampaign,
+  ICampaignResponse,
+  campaignObjectives,
+} from "@/types/services";
 import { useMutation, useQuery } from "@tanstack/react-query";
 import { useSearchParams } from "next/navigation";
 
@@ -46,6 +50,11 @@ export default function Campaign() {
         />
       );
     } else {
+      if (key === "campaign_objective") {
+        return campaignObjectives[
+          obj[key as keyof ICampaign<String>] as keyof typeof campaignObjectives
+        ];
+      }
       return obj[key as keyof ICampaign<String>];
     }
   };

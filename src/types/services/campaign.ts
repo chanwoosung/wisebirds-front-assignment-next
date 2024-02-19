@@ -29,8 +29,7 @@ export interface ICampaign<T> {
   vtr: T;
 }
 
-export interface ICampaignResponse<T> {
-  content: ICampaign<T>[];
+export interface IPaging {
   size: number;
   total_elements: number;
   total_pages: number;
@@ -38,4 +37,8 @@ export interface ICampaignResponse<T> {
   number_of_elements?: number;
   first?: boolean;
   empty?: boolean;
+}
+
+export interface ICampaignResponse<T> extends IPaging {
+  content: ICampaign<T>[];
 }

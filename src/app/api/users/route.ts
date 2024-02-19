@@ -1,6 +1,6 @@
 import { paging } from "@/lib/paging";
 import { campaignData } from "@/mocks";
-import { ICampaign } from "@/types/services";
+import { userData } from "@/mocks/user";
 import { NextRequest, NextResponse } from "next/server";
 
 async function GET(req: NextRequest) {
@@ -8,35 +8,10 @@ async function GET(req: NextRequest) {
     const page = Number(req.nextUrl.searchParams.get("page") ?? 1);
     const size = Number(req.nextUrl.searchParams.get("size") ?? 25);
 
-    const slicedData = paging(page, size, campaignData.content);
-
-    const newData: ICampaign<string>[] = slicedData.map((data) => {
-      const modifiedData: any = { ...data };
-      modifiedData.impressions =
-        typeof modifiedData.impressions === "number"
-          ? modifiedData.impressions.toLocaleString()
-          : modifiedData.impressions;
-      modifiedData.clicks =
-        typeof modifiedData.clicks === "number"
-          ? modifiedData.clicks.toLocaleString()
-          : modifiedData.clicks;
-      modifiedData.ctr =
-        typeof modifiedData.ctr === "number"
-          ? modifiedData.ctr.toLocaleString() + "%"
-          : modifiedData.ctr;
-      modifiedData.video_views =
-        typeof modifiedData.video_views === "number"
-          ? modifiedData.video_views.toLocaleString()
-          : modifiedData.video_views;
-      modifiedData.vtr =
-        typeof modifiedData.vtr === "number"
-          ? modifiedData.vtr.toLocaleString() + "%"
-          : modifiedData.vtr;
-      return modifiedData;
-    });
+    const slicedData = paging(page, size, userData.content);
 
     const paginatedData = {
-      content: newData,
+      content: slicedData,
       size: size,
       total_elements: campaignData.total_elements,
       total_pages: Math.ceil(campaignData.total_elements / size),
