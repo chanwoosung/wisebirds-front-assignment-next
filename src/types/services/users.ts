@@ -13,7 +13,7 @@ export type IUser = {
   name: string;
   email: string;
   last_login_at: Date;
-  edit: boolean;
+  edit: string;
 };
 
 export interface IUsersResponse extends IPaging {

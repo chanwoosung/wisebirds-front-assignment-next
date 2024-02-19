@@ -8,7 +8,7 @@ const generateRandomUser = (id: number): IUser => {
     email: faker.internet.email(),
     name: faker.person.firstName(),
     last_login_at: faker.date.past(),
-    edit: false,
+    edit: "수정",
   };
 };
 
