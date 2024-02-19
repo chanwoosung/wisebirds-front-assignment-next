@@ -23,9 +23,9 @@ const getRandomCampaignObjective = (): CampaignObjective => {
 // 무작위 캠페인 데이터 생성 함수
 const generateRandomCampaign = (id: number): ICampaign<Number> => {
   const isEnabled = !!((Math.random() * 2) | 0);
-  const ctr = faker.datatype.float({ min: 0, max: 1 });
+  const ctr = faker.number.float({ min: 0, max: 1 });
   const ctrPercentage = Number((ctr * 100).toFixed(3));
-  const vtr = faker.datatype.float({ min: 0, max: 1 });
+  const vtr = faker.number.float({ min: 0, max: 1 });
   const vtrPercentage = Number((vtr * 100).toFixed(3));
   return {
     id: id,
