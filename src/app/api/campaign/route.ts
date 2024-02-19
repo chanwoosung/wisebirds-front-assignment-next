@@ -1,4 +1,5 @@
 import { campaignData } from "@/mocks";
+import { ICampaign } from "@/types/services";
 import { NextRequest, NextResponse } from "next/server";
 
 export async function GET(req: NextRequest) {
@@ -10,10 +11,34 @@ export async function GET(req: NextRequest) {
     const endIndex = Math.min(startIndex + size, campaignData.content.length);
 
     const slicedData = campaignData.content.slice(startIndex, endIndex);
-    console.log(startIndex, endIndex, slicedData);
+
+    const newData: ICampaign<string>[] = slicedData.map((data) => {
+      const modifiedData: any = { ...data };
+      modifiedData.impressions =
+        typeof modifiedData.impressions === "number"
+          ? modifiedData.impressions.toLocaleString()
+          : modifiedData.impressions;
+      modifiedData.clicks =
+        typeof modifiedData.clicks === "number"
+          ? modifiedData.clicks.toLocaleString()
+          : modifiedData.clicks;
+      modifiedData.ctr =
+        typeof modifiedData.ctr === "number"
+          ? modifiedData.ctr.toLocaleString() + "%"
+          : modifiedData.ctr;
+      modifiedData.video_views =
+        typeof modifiedData.video_views === "number"
+          ? modifiedData.video_views.toLocaleString()
+          : modifiedData.video_views;
+      modifiedData.vtr =
+        typeof modifiedData.vtr === "number"
+          ? modifiedData.vtr.toLocaleString() + "%"
+          : modifiedData.vtr;
+      return modifiedData;
+    });
 
     const paginatedData = {
-      content: slicedData,
+      content: newData,
       size: size,
       total_elements: campaignData.total_elements,
       total_pages: Math.ceil(campaignData.total_elements / size),
