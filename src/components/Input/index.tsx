@@ -5,7 +5,7 @@ export interface IInputProps
   error?: string;
 }
 const Input = React.forwardRef<HTMLInputElement, IInputProps>(
-  ({ error, type, placeholder }, ref) => {
+  ({ error, type, placeholder, ...props }, ref) => {
     const [isHidden, setIsHidden] = useState(true);
     const inputType = type === "password" ? (isHidden ? type : "text") : type;
     return (
@@ -20,6 +20,7 @@ const Input = React.forwardRef<HTMLInputElement, IInputProps>(
           ref={ref}
           type={inputType}
           placeholder={placeholder}
+          {...props}
           className={`flex
                     h-13
                     w-full
@@ -43,14 +44,16 @@ const Input = React.forwardRef<HTMLInputElement, IInputProps>(
         {type === "password" ? (
           <div onClick={() => setIsHidden(!isHidden)}></div>
         ) : null}
-        <span
-          className="text-red-500
+        {error ? (
+          <span
+            className="text-red-500
                     text-xs
                     mt-2
                     px-1"
-        >
-          {error}
-        </span>
+          >
+            {error}
+          </span>
+        ) : null}
       </div>
     );
   }

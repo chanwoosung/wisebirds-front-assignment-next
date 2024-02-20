@@ -22,13 +22,15 @@ export default function UserUploadModal() {
     formState: { errors, isValid },
     setError,
   } = useForm<IRequestUserUpload>();
-  console.log(errors, isValid, watch("email"));
 
   const handleGoBack = () => router.back();
 
   const { mutate } = useMutation({
     mutationFn: (params: IRequestUserUpload) => postUsers(params),
-    onSuccess: () => handleGoBack(),
+    onSuccess: (data) => {
+      console.log(data);
+      // handleGoBack()
+    },
     onError: () =>
       setError("email", {
         message: "이미 사용중인 이메일입니다. 다른 이메일을 입력하세요.",
@@ -36,7 +38,6 @@ export default function UserUploadModal() {
   });
 
   const onSubmit = (data: IRequestUserUpload) => {
-    console.log(data);
     mutate(data);
   };
 
@@ -68,7 +69,7 @@ export default function UserUploadModal() {
                 validate: (value) => {
                   const regex =
                     /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
-                  if (!regex.test(value?.toString() ?? "")) {
+                  if (!regex.test(value)) {
                     return "올바른 이메일 주소를 입력하세요.";
                   }
                 },
@@ -125,8 +126,8 @@ export default function UserUploadModal() {
                   value: true,
                 },
                 validate: (value) => {
-                  const regex = /^[a-zA-Z0-9!@#$%^&*()-_+=]{1,16}$/;
-                  if (!regex.test(value?.toString() ?? "")) {
+                  const regex = /^[a-zA-Z가-힣]{1,16}$/;
+                  if (!regex.test(value)) {
                     return "이름을 올바르게 입력하세요. (숫자, 특수문자, 공백 입력 불가)";
                   }
                 },

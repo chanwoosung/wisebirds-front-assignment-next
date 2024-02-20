@@ -1,3 +1,4 @@
+import { IRequestUserUpload } from "@/app/(ui)/user/@modal/upload/page";
 import { paging } from "@/lib/paging";
 import { userData } from "@/mocks/user";
 import { NextRequest, NextResponse } from "next/server";
@@ -24,23 +25,17 @@ async function GET(req: NextRequest) {
 
 async function POST(req: NextRequest) {
   try {
-    console.log(req.body);
-    // if (id === undefined)
-    //   return NextResponse.json({ message: "id is null" }, { status: 400 });
-    // if (id && campaignData.content[Number(id)] === undefined) {
-    //   return NextResponse.json({ message: "id is null" }, { status: 404 });
-    // }
-
-    // return NextResponse.json(
-    //   {
-    //     id,
-    //     result: true,
-    //   },
-    //   {
-    //     status: 200,
-    //   }
-    // );
-    return NextResponse.json({});
+    const data: IRequestUserUpload = await req.json();
+    const { result } = await fetch(`/api/users/${data.email}/exists`).then(
+      (response) => response.json()
+    );
+    if (result)
+      return NextResponse.json(
+        { message: "이미 등록된 유저입니다." },
+        { status: 409 }
+      );
+    const res = await fetch(`/api/users`).then((response) => response.json());
+    return NextResponse.json(res);
   } catch (error) {
     return NextResponse.json({ error }, { status: 500 });
   }
