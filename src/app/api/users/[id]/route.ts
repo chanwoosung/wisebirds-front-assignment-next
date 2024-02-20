@@ -4,7 +4,6 @@ import { NextRequest, NextResponse } from "next/server";
 export async function PATCH(req: NextRequest) {
   try {
     const data: IRequestUserPatch = await req.json();
-    console.log(data);
 
     const res = await fetch(`/api/users/${data.id}`);
     return NextResponse.json(res, { status: res.status });

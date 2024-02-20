@@ -8,7 +8,6 @@ export const getUsers = async ({
   page: number;
   size: number;
 }) => {
-  console.log("page:", page, size);
   const res = await fetch(
     `http://localhost:3000/api/users?page=${page}&size=${size}`
   );

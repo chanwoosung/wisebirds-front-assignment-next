@@ -48,7 +48,6 @@ export default function UserPatchModal() {
 
   const handleGoBack = () => router.back();
   const onSubmit = async (data: IRequestUserPatch) => {
-    console.log(data);
     const isValid = await trigger();
     isValid &&
       mutate({

@@ -51,7 +51,6 @@ async function GET(req: NextRequest) {
 async function PATCH(req: NextRequest) {
   try {
     const id = req.nextUrl.searchParams.get("id");
-    console.log(id);
     if (id === undefined)
       return NextResponse.json({ message: "id is null" }, { status: 400 });
     if (id && campaignData.content[Number(id)] === undefined) {

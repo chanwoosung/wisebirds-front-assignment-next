@@ -16,9 +16,7 @@ const Switch = observer(
     }));
 
     const handleEvent = () => {
-      console.log("prev state.isCheck", state.isCheck);
       state.toggle();
-      console.log("after state.isCheck", state.isCheck);
       onClick?.(state.isCheck);
     };
 
