@@ -19,7 +19,8 @@ export default function UserUploadModal() {
     register,
     handleSubmit,
     watch,
-    formState: { errors, isValid },
+    trigger,
+    formState: { errors },
     setError,
   } = useForm<IRequestUserUpload>();
 
@@ -27,9 +28,9 @@ export default function UserUploadModal() {
 
   const { mutate } = useMutation({
     mutationFn: (params: IRequestUserUpload) => postUsers(params),
-    onSuccess: (data) => {
-      console.log(data);
-      // handleGoBack()
+    onSuccess: () => {
+      alert("수정되었습니다.");
+      handleGoBack();
     },
     onError: () =>
       setError("email", {
@@ -37,8 +38,9 @@ export default function UserUploadModal() {
       }),
   });
 
-  const onSubmit = (data: IRequestUserUpload) => {
-    mutate(data);
+  const onSubmit = async (data: IRequestUserUpload) => {
+    const isValid = await trigger();
+    isValid && mutate(data);
   };
 
   return (

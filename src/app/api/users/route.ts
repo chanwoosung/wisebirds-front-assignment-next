@@ -34,7 +34,7 @@ async function POST(req: NextRequest) {
         { message: "이미 등록된 유저입니다." },
         { status: 409 }
       );
-    const res = await fetch(`/api/users`).then((response) => response.json());
+    const res = await fetch(`/api/users`);
     return NextResponse.json(res);
   } catch (error) {
     return NextResponse.json({ error }, { status: 500 });

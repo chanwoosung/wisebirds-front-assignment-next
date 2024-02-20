@@ -28,7 +28,12 @@ export default function User() {
     if (key === "edit") {
       return (
         <div className="w-full flex justify-center">
-          <button className="w-fit border-2 p-4 border-gray-100">수정</button>
+          <Link
+            href={`${pathname}/patch?id=${obj.id}&currnetPage=${currnetPage}&dataSize=${dataSize}`}
+            className="w-fit border-2 p-4 border-gray-100"
+          >
+            수정
+          </Link>
         </div>
       );
     }

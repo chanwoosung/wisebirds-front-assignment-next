@@ -1,3 +1,4 @@
+import { IRequestUserPatch } from "@/app/(ui)/user/@modal/patch/page";
 import { IRequestUserUpload } from "@/app/(ui)/user/@modal/upload/page";
 
 export const getUsers = async ({
@@ -21,6 +22,13 @@ export const getUsers = async ({
 export const postUsers = async (params: IRequestUserUpload) => {
   return await fetch(`http://localhost:3000/api/users`, {
     method: "POST",
+    body: JSON.stringify(params),
+  });
+};
+
+export const patchUsers = async (params: IRequestUserPatch) => {
+  return await fetch(`http://localhost:3000/api/users/${params.id}`, {
+    method: "PATCH",
     body: JSON.stringify(params),
   });
 };
