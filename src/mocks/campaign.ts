@@ -35,7 +35,7 @@ const generateRandomCampaign = (id: number): ICampaign<Number> => {
     impressions: faker.number.int(),
     clicks: faker.number.int(),
     ctr: ctrPercentage,
-    video_views: faker.number.int(),
+    video_views: faker.number.int({ min: 0, max: 1000 }),
     vtr: vtrPercentage,
   };
 };

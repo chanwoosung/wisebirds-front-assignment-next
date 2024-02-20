@@ -3,6 +3,7 @@
 import Pagination from "@/components/Pagenation";
 import TableBody from "@/components/Table/Body";
 import { TableHeader } from "@/components/Table/Header";
+import { formatDateTime } from "@/lib/formatDate";
 import { getUsers } from "@/lib/services/users";
 import { IUser, IUsersResponse, UserTableHeader } from "@/types/services";
 import { useQuery } from "@tanstack/react-query";
@@ -36,6 +37,9 @@ export default function User() {
           </Link>
         </div>
       );
+    }
+    if (key === "last_login_at") {
+      return <span>{formatDateTime(obj[key as keyof IUser].toString())}</span>;
     }
     return <span>{obj[key as keyof IUser].toString()}</span>;
   };
